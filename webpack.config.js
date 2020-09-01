@@ -3,13 +3,11 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-// const PurgecssPlugin = require("purgecss-webpack-plugin");
-// const PATHS = {
-//   src: path.join(__dirname, "src"),
-// };
+const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+
 module.exports = {
   entry: "./src/index.js",
-  mode: "development",
+  mode: "production",
   output: {
     filename: "bundle.[hash].js",
     path: path.resolve(__dirname, "dist"),
@@ -26,6 +24,7 @@ module.exports = {
         },
       },
     },
+    minimizer: [new OptimizeCssAssetsPlugin({})],
     runtimeChunk: "single",
   },
 
@@ -37,23 +36,7 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: "[name].css",
     }),
-    // new PurgecssPlugin({
-    //   paths: glob.sync(`./index.js`, { nodir: true }),
-      // paths: glob.sync([
-      //   `${PATHS.src}/index.html`,
-      //   `./app.js`
-      // ], {nodir:true})
-    // }),
   ],
-
-  // devServer: {
-    
-  //   headers: {
-  //     "Access-Control-Allow-Origin": "*",
-  //     "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
-  //     "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
-  //   }
-  // },
 
   module: {
     rules: [
